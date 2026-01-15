@@ -6,14 +6,15 @@ import {
   User, 
   ShoppingBag, 
   Menu, 
-  Camera, 
-  Mic 
+  X,           // ← added for close icon
+  ChevronRight 
 } from 'lucide-react';
 
 const Header = () => {
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search for");
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // ← NEW STATE
 
   // Search Animation Data
   const searchTerms = [
@@ -24,15 +25,15 @@ const Header = () => {
     "Pendants"
   ];
 
-  // --- 1. Search Text Animation Logic ---
+  // Search text animation
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholderIndex((prev) => (prev + 1) % searchTerms.length);
-    }, 3000); // Change text every 3 seconds
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  // --- 2. Scroll Shadow Logic ---
+  // Scroll shadow
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -41,106 +42,169 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on escape key (good UX)
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
   return (
-    <header 
-      className={`sticky top-0 z-50 w-full bg-white/20 backdrop-blur-2xl transition-all duration-300 justify-center items-center ${
-        isScrolled ? 'shadow-md py-2' : 'py-4'
-      }`}
-    >
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-        
-        {/* === LEFT: Mobile Menu & Logo === */}
-        <div className="flex items-center gap-4">
-          {/* Mobile Hamburger */}
-          <button className="lg:hidden p-2 text-[#832729]">
-            <Menu size={24} />
-          </button>
+    <>
+      <header 
+        className={`sticky top-0 z-50 w-full bg-white/20 backdrop-blur-2xl transition-all duration-300 ${
+          isScrolled ? 'shadow-md py-2' : 'py-4'
+        }`}
+      >
+        <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+          
+          {/* LEFT: Hamburger + Logo */}
+          <div className="flex items-center gap-4">
+            {/* Mobile Hamburger – now functional */}
+            <button 
+              className="lg:hidden p-2 text-[#832729] focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
 
-          {/* BRAND LOGO (Extracted from your HTML) */}
-          <a href="/" className="flex-shrink-2">
-          <img className='h-20' src='/logo.png' />
-          </a>
-        </div>
+            <a href="/" className="flex-shrink-0">
+              <img className="h-16 md:h-20" src="/logo.png" alt="Brand Logo" />
+            </a>
+          </div>
 
-        {/* === CENTER: Search Bar (Desktop) === */}
-        <div className="hidden lg:flex flex-1 max-w-xl mx-8 relative group">
-          <div className="relative w-full">
-            <input 
-              type="text" 
-              className="w-full h-10 pl-4 pr-24 bg-[#F8F8F8] border border-[#e8e8e8] rounded-md focus:outline-none focus:border-[#832729] focus:bg-white transition-colors text-sm text-gray-700 placeholder-transparent"
-              placeholder="Search"
-            />
-            
-            {/* Animated Placeholder Text */}
-            <div className="absolute left-4 top-0 h-10 flex items-center pointer-events-none overflow-hidden">
-               <span className="text-gray-400 text-sm whitespace-pre">
-                 Search for{" "}
-                 <span className="text-[#832729] font-medium transition-all duration-500 animate-slide-up inline-block">
+          {/* CENTER: Desktop Search */}
+          <div className="hidden lg:flex flex-1 max-w-xl mx-8 relative group">
+            <div className="relative w-full">
+              <input 
+                type="text" 
+                className="w-full h-10 pl-4 pr-24 bg-[#F8F8F8] border border-[#e8e8e8] rounded-md focus:outline-none focus:border-[#832729] focus:bg-white transition-colors text-sm text-gray-700 placeholder-transparent"
+                placeholder="Search"
+              />
+              <div className="absolute left-4 top-0 h-10 flex items-center pointer-events-none overflow-hidden">
+                <span className="text-gray-400 text-sm whitespace-pre">
+                  Search for{" "}
+                  <span className="text-[#832729] font-medium transition-all duration-500 animate-slide-up inline-block">
                     {searchTerms[placeholderIndex]}
-                 </span>
-               </span>
-            </div>
-
-            {/* Right Side Icons (Camera, Voice, Search) */}
-            <div className="absolute right-0 top-0 h-10 flex items-center pr-2 gap-2">
-              <button className="bg-[#832729] hover:bg-[#6a1f21] text-white p-1.5 rounded-md transition">
-                <Search size={18} />
-              </button>
+                  </span>
+                </span>
+              </div>
+              <div className="absolute right-0 top-0 h-10 flex items-center pr-2 gap-2">
+                <button className="bg-[#832729] hover:bg-[#6a1f21] text-white p-1.5 rounded-md transition">
+                  <Search size={18} />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* === RIGHT: Icons & Menu === */}
-        <div className="flex items-center gap-6">
-          
-          {/* Mobile Search Icon */}
-          <button className="lg:hidden text-[#832729]">
-             <Search size={22} />
-          </button>
+          {/* RIGHT: Icons */}
+          <div className="flex items-center gap-5 md:gap-6">
+            <button className="lg:hidden text-[#832729]">
+              <Search size={22} />
+            </button>
 
-          {/* Diamond Icon (Education) */}
-          <a href="#" className="hidden lg:block group">
-             <div className="flex flex-col items-center">
-                <img  
+            <a href="#" className="hidden lg:block group">
+              <img  
                 src="https://www.tanishq.co.in/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw4f3843a4/diamond-icon.svg"
-                  alt="Diamond" 
-                  className="h-6 w-auto opacity-80 group-hover:opacity-100 transition" 
-                />
-             </div>
-          </a>
+                alt="Diamond" 
+                className="h-6 w-auto opacity-80 group-hover:opacity-100 transition" 
+              />
+            </a>
 
-          {/* Stores */}
-          <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
-            <MapPin size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Stores</span>
-          </a>
+            <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
+              <MapPin size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Stores</span>
+            </a>
 
-          {/* Wishlist */}
-          <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
-            <Heart size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Wishlist</span>
-          </a>
+            <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
+              <Heart size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Wishlist</span>
+            </a>
 
-          {/* Account */}
-          <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
-            <User size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Account</span>
-          </a>
+            <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
+              <User size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Account</span>
+            </a>
 
-          {/* Cart */}
-          <a href="#" className="flex flex-col items-center group text-[#832729] relative">
-            <div className="relative">
-              <ShoppingBag size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-              <span className="absolute -top-1 -right-2 bg-[#832729] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">
-                0
-              </span>
-            </div>
-            <span className="hidden lg:block text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Cart</span>
-          </a>
+            <a href="#" className="flex flex-col items-center group text-[#832729] relative">
+              <div className="relative">
+                <ShoppingBag size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+                <span className="absolute -top-1 -right-2 bg-[#832729] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">
+                  0
+                </span>
+              </div>
+              <span className="hidden lg:block text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Cart</span>
+            </a>
+          </div>
         </div>
+      </header>
 
+      {/* ── MOBILE MENU ── */}
+      <div 
+        className={`lg:hidden fixed inset-0 z-50 transition-all duration-300 ${
+          isMobileMenuOpen 
+            ? 'opacity-100 pointer-events-auto' 
+            : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+
+        {/* Drawer */}
+        <div 
+          className={`absolute top-0 left-0 h-full w-4/5 max-w-xs bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className="p-6">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+              <img className="h-16" src="/logo.png" alt="Logo" />
+              <button 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-[#832729]"
+              >
+                <X size={28} />
+              </button>
+            </div>
+
+            {/* Menu Items */}
+            <nav className="space-y-6 text-lg">
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Home <ChevronRight size={20} />
+              </a>
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Shop <ChevronRight size={20} />
+              </a>
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Necklaces <ChevronRight size={20} />
+              </a>
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Rings <ChevronRight size={20} />
+              </a>
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Bangles <ChevronRight size={20} />
+              </a>
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Stores <ChevronRight size={20} />
+              </a>
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Wishlist <ChevronRight size={20} />
+              </a>
+              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Account <ChevronRight size={20} />
+              </a>
+            </nav>
+          </div>
+        </div>
       </div>
-    </header>
+    </>
   );
 };
 
