@@ -85,8 +85,8 @@ const CartPage = () => {
                                         <span className="font-medium text-[#0F0F0F]">₹ {getCartTotal().toLocaleString('en-IN')}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span>Shipping</span>
-                                        <span className="text-green-600 font-medium">Free</span>
+                                        <span>Come to Store</span>
+                                        <span className="text-green-600 font-medium">For Free Rewards</span>
                                     </div>
                                 </div>
 
@@ -98,7 +98,7 @@ const CartPage = () => {
                                 </div>
 
                                 <button className="w-full bg-[#0F0F0F] text-white h-14 flex items-center justify-center gap-3 text-sm font-semibold uppercase tracking-widest hover:bg-[#8B2F2F] transition-colors shadow-xl rounded-sm">
-                                    Have a GOod Day
+                                    Have a Good Day
                                     <ArrowRight size={18} />
                                 </button>
 
