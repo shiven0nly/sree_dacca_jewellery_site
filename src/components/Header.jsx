@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Search, 
-  MapPin, 
-  Heart, 
-  User, 
-  ShoppingBag, 
-  Menu, 
-  X,           // ← added for close icon
-  ChevronRight 
+import {
+  Search,
+  MapPin,
+  Heart,
+  User,
+  ShoppingBag,
+  Menu,
+  X,
+  ChevronRight
 } from 'lucide-react';
+import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search for");
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // ← NEW STATE
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
   // Search Animation Data
   const searchTerms = [
@@ -53,17 +56,16 @@ const Header = () => {
 
   return (
     <>
-      <header 
-        className={`sticky top-0 z-50 w-full bg-white/20 backdrop-blur-2xl transition-all duration-300 ${
-          isScrolled ? 'shadow-md py-2' : 'py-4'
-        }`}
+      <header
+        className={`sticky top-0 z-50 w-full bg-white/20 backdrop-blur-2xl transition-all duration-300 ${isScrolled ? 'shadow-md py-2' : 'py-4'
+          }`}
       >
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-          
+
           {/* LEFT: Hamburger + Logo */}
           <div className="flex items-center gap-4">
             {/* Mobile Hamburger – now functional */}
-            <button 
+            <button
               className="lg:hidden p-2 text-[#832729] focus:outline-none"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
@@ -71,16 +73,16 @@ const Header = () => {
               {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
 
-            <a href="/" className="flex-shrink-0">
+            <Link to="/" className="flex-shrink-0">
               <img className="h-16 md:h-20" src="/logo.png" alt="Brand Logo" />
-            </a>
+            </Link>
           </div>
 
           {/* CENTER: Desktop Search */}
           <div className="hidden lg:flex flex-1 max-w-xl mx-8 relative group">
             <div className="relative w-full">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="w-full h-10 pl-4 pr-24 bg-[#F8F8F8] border border-[#e8e8e8] rounded-md focus:outline-none focus:border-[#832729] focus:bg-white transition-colors text-sm text-gray-700 placeholder-transparent"
                 placeholder="Search"
               />
@@ -107,10 +109,10 @@ const Header = () => {
             </button>
 
             <a href="#" className="hidden lg:block group">
-              <img  
+              <img
                 src="https://www.tanishq.co.in/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw4f3843a4/diamond-icon.svg"
-                alt="Diamond" 
-                className="h-6 w-auto opacity-80 group-hover:opacity-100 transition" 
+                alt="Diamond"
+                className="h-6 w-auto opacity-80 group-hover:opacity-100 transition"
               />
             </a>
 
@@ -129,44 +131,42 @@ const Header = () => {
               <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Account</span>
             </a>
 
-            <a href="#" className="flex flex-col items-center group text-[#832729] relative">
+            <Link to="/cart" className="flex flex-col items-center group text-[#832729] relative">
               <div className="relative">
                 <ShoppingBag size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
                 <span className="absolute -top-1 -right-2 bg-[#832729] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">
-                  0
+                  {cartCount}
                 </span>
               </div>
               <span className="hidden lg:block text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Cart</span>
-            </a>
+            </Link>
           </div>
         </div>
       </header>
 
       {/* ── MOBILE MENU ── */}
-      <div 
-        className={`lg:hidden fixed inset-0 z-50 transition-all duration-300 ${
-          isMobileMenuOpen 
-            ? 'opacity-100 pointer-events-auto' 
+      <div
+        className={`lg:hidden fixed inset-0 z-50 transition-all duration-300 ${isMobileMenuOpen
+            ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
-        }`}
+          }`}
       >
         {/* Backdrop */}
-        <div 
+        <div
           className="absolute inset-0 bg-black/40 backdrop-blur-sm"
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
         {/* Drawer */}
-        <div 
-          className={`absolute top-0 left-0 h-full w-4/5 max-w-xs bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
-            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        <div
+          className={`absolute top-0 left-0 h-full w-4/5 max-w-xs bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
         >
           <div className="p-6">
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
               <img className="h-16" src="/logo.png" alt="Logo" />
-              <button 
+              <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-[#832729]"
               >
