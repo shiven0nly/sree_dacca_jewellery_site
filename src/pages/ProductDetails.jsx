@@ -39,7 +39,7 @@ const ProductDetails = () => {
                         transition={{ duration: 0.8 }}
                         className="relative"
                     >
-                        <div className="aspect-[4/5] rounded-tl-[5rem] rounded-br-[5rem] overflow-hidden shadow-2xl">
+                        <div className="aspect-[4/5] overflow-hidden shadow-2xl">
                             <img
                                 src={product.image}
                                 alt={product.name}
