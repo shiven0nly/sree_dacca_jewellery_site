@@ -1,9 +1,21 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const HeroImages = ['/girlModel1.jpg', '/girlModel2.jpg'];
+
 const HeroSection = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % HeroImages.length);
+    }, 4000); // Change image every 4 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative w-full min-h-[80vh] md:min-h-[calc(100vh-80px)] overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#FDFBF7] via-[#FDF8F2] to-[#FAF5ED]">
 
@@ -25,18 +37,25 @@ const HeroSection = () => {
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
             <div className="relative w-full max-w-[520px] lg:max-w-none h-[50vh] sm:h-[60vh] lg:h-[85vh] rounded-3xl lg:rounded-[6rem] overflow-hidden border-2 border-[#D4AF37]/30 shadow-2xl shadow-black/10">
-              <img
-                src="https://images.unsplash.com/photo-1694062045776-f48d9b6de57e?auto=format&fit=crop&q=80&w=800"
-                alt="Elegant Indian model showcasing luxurious diamond and gold jewellery"
-                className="w-full h-full object-cover object-top sm:object-center transition-transform duration-[1500ms] hover:scale-[1.03]"
-              />
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImageIndex}
+                  src={HeroImages[currentImageIndex]}
+                  alt="Elegant Indian model showcasing luxurious diamond and gold jewellery"
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="w-full h-full object-cover object-top sm:object-center absolute inset-0"
+                />
+              </AnimatePresence>
 
               {/* Floating badge – adjusted for mobile */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2, duration: 1 }}
-                className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 bg-white/85 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow-2xl border border-[#D4AF37]/40 max-w-[220px] sm:max-w-[240px]"
+                className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 bg-white/85 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow-2xl border border-[#D4AF37]/40 max-w-[220px] sm:max-w-[240px] z-10"
               >
                 <p className="font-serif text-xl sm:text-2xl text-[#0F0F0F] mb-1">Royal Choker</p>
                 <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#666] mb-2 sm:mb-3">Heritage Collection</p>

@@ -107,7 +107,7 @@ const ProductCard = ({ product }) => {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="group flex flex-col items-center"
     >
-      <div className="relative w-full aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-2xl bg-gradient-to-br from-white/40 to-transparent shadow-[0_10px_40px_rgba(0,0,0,0.1)] transition-all duration-700 hover:shadow-2xl">
+      <div className="relative w-full aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-2xl bg-gradient-to-br from-[#8B2F2F]/20 to-[#8B2F2F]/5 shadow-[0_10px_40px_rgba(0,0,0,0.1)] transition-all duration-700 hover:shadow-2xl">
         <Link to={`/product/${product.id}`}>
           {product.tag && (
             <div className="absolute top-4 left-4 z-30">
@@ -120,9 +120,6 @@ const ProductCard = ({ product }) => {
           <div className="absolute top-4 right-4 z-30 flex flex-col gap-4">
             {/* Mobile: Always visible icons. Desktop: Hover only */}
             <div className="flex flex-col gap-4 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-              <button className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/95 backdrop-blur-xl text-[#222] hover:bg-[#8B2F2F] hover:text-white rounded-full shadow-xl transition-colors cursor-pointer">
-                <Heart size={18} strokeWidth={1.6} />
-              </button>
               <button className="hidden md:flex w-12 h-12 items-center justify-center bg-white/95 backdrop-blur-xl text-[#222] hover:bg-[#8B2F2F] hover:text-white rounded-full shadow-xl transition-colors cursor-pointer">
                 <Eye size={20} strokeWidth={1.6} />
               </button>
@@ -132,7 +129,7 @@ const ProductCard = ({ product }) => {
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+            className="w-full h-full object-contain transition-transform duration-1000 ease-out group-hover:scale-105"
           />
         </Link>
 

@@ -77,7 +77,7 @@ const CartPage = () => {
                         {/* Application Summary */}
                         <div className="lg:w-96 shrink-0">
                             <div className="bg-white p-8 rounded-2xl shadow-lg border border-[#F0F0F0] sticky top-32">
-                                <h3 className="font-serif text-2xl mb-8">Order Summary</h3>
+                                <h3 className="font-serif text-2xl mb-8">Details</h3>
 
                                 <div className="space-y-4 mb-8 text-sm text-gray-600">
                                     <div className="flex justify-between">
@@ -99,12 +99,7 @@ const CartPage = () => {
 
                                 <button className="w-full bg-[#0F0F0F] text-white h-14 flex items-center justify-center gap-3 text-sm font-semibold uppercase tracking-widest hover:bg-[#8B2F2F] transition-colors shadow-xl rounded-sm">
                                     Have a Good Day
-                                    <ArrowRight size={18} />
                                 </button>
-
-                                <p className="text-xs text-gray-400 text-center mt-6">
-                                    Secure Checkout • Free Shipping • Easy Returns
-                                </p>
                             </div>
                         </div>
                     </div>

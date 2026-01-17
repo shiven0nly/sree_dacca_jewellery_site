@@ -93,17 +93,13 @@ const ProductDetails = () => {
                                 <ShoppingBag size={18} />
                                 Add to Cart
                             </button>
-                            <button className="flex-1 border border-[#0F0F0F] text-[#0F0F0F] h-14 flex items-center justify-center gap-3 text-sm font-semibold uppercase tracking-widest hover:bg-[#0F0F0F] hover:text-white transition-colors">
-                                <Heart size={18} />
-                                Add to Wishlist
-                            </button>
                         </div>
 
                         {/* Features */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-gray-200">
                             <div className="flex items-center gap-3">
                                 <Truck size={24} className="text-[#8B2F2F]" strokeWidth={1.5} />
-                                <span className="text-xs uppercase font-medium tracking-wider">Free Shipping</span>
+                                <span className="text-xs uppercase font-medium tracking-wider">Free Rewards</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <ShieldCheck size={24} className="text-[#8B2F2F]" strokeWidth={1.5} />

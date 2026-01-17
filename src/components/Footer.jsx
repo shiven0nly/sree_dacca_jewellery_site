@@ -1,5 +1,6 @@
 import React from 'react';
 import { testimonials } from '../data/testimonials';
+import TestimonialSection from './TestimonialSection';
 import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from 'lucide-react';
 
 const Footer = () => {
@@ -8,27 +9,7 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto">
 
                 {/* Testimonials Section */}
-                <div className="mb-20">
-                    <div className="text-center mb-12">
-                        <span className="text-[#D4AF37] text-xs font-medium tracking-[0.3em] uppercase">Testimonials</span>
-                        <h3 className="font-serif text-3xl md:text-4xl mt-3">Words from our Patrons</h3>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {testimonials.map((t) => (
-                            <div key={t.id} className="bg-[#1a1a1a] p-8 rounded-2xl border border-white/5 relative">
-                                <div className="text-[#D4AF37] text-4xl font-serif absolute top-4 left-6 opacity-30">"</div>
-                                <p className="text-gray-300 italic mb-6 relative z-10 leading-relaxed">
-                                    {t.text}
-                                </p>
-                                <div>
-                                    <h4 className="font-serif text-lg text-white">{t.name}</h4>
-                                    <span className="text-xs text-gray-500 uppercase tracking-wider">{t.location}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <TestimonialSection />
 
                 <div className="w-full h-[1px] bg-white/10 mb-16"></div>
 
@@ -38,12 +19,11 @@ const Footer = () => {
                     <div>
                         <h2 className="font-serif text-2xl mb-6">SREE DACCA</h2>
                         <p className="text-gray-400 text-sm leading-7 mb-6">
-                            Crafting eternal elegance since___. Our jewellery is a celebration of art, culture, and timeless beauty.
+                            Crafting eternal elegance. Our jewellery is a celebration of art, culture, and timeless beauty.
                         </p>
                         <div className="flex gap-4 text-gray-400">
-                            <a href="#" className="hover:text-[#D4AF37] transition"><Facebook size={20} /></a>
-                            <a href="#" className="hover:text-[#D4AF37] transition"><Instagram size={20} /></a>
-                            <a href="#" className="hover:text-[#D4AF37] transition"><Twitter size={20} /></a>
+                            <a href="https://www.facebook.com/sreedaccajewellers/" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition"><Facebook size={20} /></a>
+                            <a href="https://www.instagram.com/sreedaccajewellers/" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition"><Instagram size={20} /></a>
                         </div>
                     </div>
 
@@ -51,20 +31,17 @@ const Footer = () => {
                     <div>
                         <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-[#D4AF37]">Shop</h4>
                         <ul className="space-y-4 text-sm text-gray-400">
-                            <li><a href="#" className="hover:text-white transition">All Jewellery</a></li>
-                            <li><a href="#" className="hover:text-white transition">New Arrivals</a></li>
-                            <li><a href="#" className="hover:text-white transition">Best Sellers</a></li>
-                            <li><a href="#" className="hover:text-white transition">Bridal Collection</a></li>
+                            <li><a href="/collections" className="hover:text-white transition">All Jewellery</a></li>
+                            <li><a href="/collections" className="hover:text-white transition">New Arrivals</a></li>
+                            <li><a href="/collections" className="hover:text-white transition">Best Sellers</a></li>
+                            <li><a href="/collections" className="hover:text-white transition">Bridal Collection</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-[#D4AF37]">Support</h4>
                         <ul className="space-y-4 text-sm text-gray-400">
-                            <li><a href="#" className="hover:text-white transition">Contact Us</a></li>
-                            <li><a href="#" className="hover:text-white transition">FAQ</a></li>
-                            <li><a href="#" className="hover:text-white transition">Shipping & Returns</a></li>
-                            <li><a href="#" className="hover:text-white transition">Care Guide</a></li>
+                            <li><a href="/stores" className="hover:text-white transition">Contact Us</a></li>
                         </ul>
                     </div>
 
@@ -73,14 +50,31 @@ const Footer = () => {
                         <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-[#D4AF37]">Contact</h4>
                         <ul className="space-y-4 text-sm text-gray-400">
                             <li className="flex gap-3">
-                                <MapPin size={18} className="text-[#D4AF37] shrink-0" />
-                                <span>123 Jewellery Lane, Kolkata , India</span>
+                                <MapPin size={18} className="text-[#D4AF37] shrink-0 mt-1" />
+                                <div className="space-y-3">
+                                    <div>
+                                        <p className="text-white text-xs font-semibold">Raiganj (Opp. Cinema Hall)</p>
+                                        <p className="text-xs">Opposite Gitanjali Cinema Hall</p>
+                                        <p className="text-xs text-[#999]">Mob: 9531581380</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-white text-xs font-semibold">Raiganj (Bidhan Nagar)</p>
+                                        <p className="text-xs">Near Bidhan Nagar More</p>
+                                        <p className="text-xs text-[#999]">Mob: 9434143004</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-white text-xs font-semibold">Itahar</p>
+                                        <p className="text-xs">Opposite Electricity Office, Patiraj Road</p>
+                                        <p className="text-xs text-[#999]">Mob: 9593190437</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-white text-xs font-semibold">Gangarampur</p>
+                                        <p className="text-xs">BaraBazar (Near Bandhan Bank)</p>
+                                        <p className="text-xs text-[#999]">Mob: 8001068586</p>
+                                    </div>
+                                </div>
                             </li>
-                            <li className="flex gap-3">
-                                <Phone size={18} className="text-[#D4AF37] shrink-0" />
-                                <span>+91 98765 43210</span>
-                            </li>
-                            <li className="flex gap-3">
+                            <li className="flex gap-3 mt-2">
                                 <Mail size={18} className="text-[#D4AF37] shrink-0" />
                                 <span>hello@sreedacca.com</span>
                             </li>
@@ -89,7 +83,7 @@ const Footer = () => {
                 </div>
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-                    <p>© 2024 Sree Dacca Jewellery. All rights reserved.</p>
+                    <p>© 2026 Sree Dacca Jewellery. All rights reserved.</p>
                     <div className="flex gap-6">
                         <a href="#" className="hover:text-white">Privacy Policy</a>
                         <a href="#" className="hover:text-white">Terms of Service</a>

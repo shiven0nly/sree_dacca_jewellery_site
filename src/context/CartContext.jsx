@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
@@ -14,12 +15,18 @@ export const CartProvider = ({ children }) => {
             return [];
         }
     });
+    const { currentUser } = useAuth();
+    const [notification, setNotification] = useState({ show: false, message: '', type: 'success' });
 
     useEffect(() => {
         localStorage.setItem('jewelleryCart', JSON.stringify(cart));
     }, [cart]);
 
     const addToCart = (product) => {
+        if (!currentUser) {
+            showNotification("Please Login to add items in cart", "error");
+            return;
+        }
         setCart((prevCart) => {
             const existingItem = prevCart.find((item) => item.id === product.id);
             if (existingItem) {
@@ -28,7 +35,17 @@ export const CartProvider = ({ children }) => {
                 );
             }
             return [...prevCart, { ...product, quantity: 1 }];
+            return [...prevCart, { ...product, quantity: 1 }];
         });
+        showNotification(`Added ${product.name} to cart`, "success");
+    };
+
+    const showNotification = (message, type = 'success') => {
+        setNotification({ show: true, message, type });
+    };
+
+    const closeNotification = () => {
+        setNotification({ ...notification, show: false });
     };
 
     const removeFromCart = (id) => {
@@ -60,7 +77,7 @@ export const CartProvider = ({ children }) => {
     }
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, cartCount, getCartTotal }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, cartCount, getCartTotal, notification, closeNotification }}>
             {children}
         </CartContext.Provider>
     );

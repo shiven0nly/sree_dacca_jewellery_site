@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Search,
   MapPin,
-  Heart,
   User,
   ShoppingBag,
   Menu,
@@ -10,7 +9,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search for");
@@ -18,6 +17,24 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cartCount } = useCart();
+
+  // Search State
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/collection?search=${encodeURIComponent(searchQuery)}`);
+      setIsMobileMenuOpen(false);
+      setSearchQuery(""); // Optional: clear after search
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   // Search Animation Data
   const searchTerms = [
@@ -85,17 +102,25 @@ const Header = () => {
                 type="text"
                 className="w-full h-10 pl-4 pr-24 bg-[#F8F8F8] border border-[#e8e8e8] rounded-md focus:outline-none focus:border-[#832729] focus:bg-white transition-colors text-sm text-gray-700 placeholder-transparent"
                 placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
-              <div className="absolute left-4 top-0 h-10 flex items-center pointer-events-none overflow-hidden">
-                <span className="text-gray-400 text-sm whitespace-pre">
-                  Search for{" "}
-                  <span className="text-[#832729] font-medium transition-all duration-500 animate-slide-up inline-block">
-                    {searchTerms[placeholderIndex]}
+              {!searchQuery && (
+                <div className="absolute left-4 top-0 h-10 flex items-center pointer-events-none overflow-hidden">
+                  <span className="text-gray-400 text-sm whitespace-pre">
+                    Search for{" "}
+                    <span className="text-[#832729] font-medium transition-all duration-500 animate-slide-up inline-block">
+                      {searchTerms[placeholderIndex]}
+                    </span>
                   </span>
-                </span>
-              </div>
+                </div>
+              )}
               <div className="absolute right-0 top-0 h-10 flex items-center pr-2 gap-2">
-                <button className="bg-[#832729] hover:bg-[#6a1f21] text-white p-1.5 rounded-md transition">
+                <button
+                  onClick={handleSearch}
+                  className="bg-[#832729] hover:bg-[#6a1f21] text-white p-1.5 rounded-md transition"
+                >
                   <Search size={18} />
                 </button>
               </div>
@@ -104,33 +129,21 @@ const Header = () => {
 
           {/* RIGHT: Icons */}
           <div className="flex items-center gap-5 md:gap-6">
-            <button className="lg:hidden text-[#832729]">
+            <button
+              className="lg:hidden text-[#832729]"
+              onClick={() => setIsMobileMenuOpen(true)} // Open menu to search or could add mobile search bar toggle
+            >
               <Search size={22} />
             </button>
 
-            <a href="#" className="hidden lg:block group">
-              <img
-                src="https://www.tanishq.co.in/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw4f3843a4/diamond-icon.svg"
-                alt="Diamond"
-                className="h-6 w-auto opacity-80 group-hover:opacity-100 transition"
-              />
-            </a>
-
-            <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
+            <Link to="/locate-us" className="hidden lg:flex flex-col items-center group text-[#832729]">
               <MapPin size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
               <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Stores</span>
-            </a>
-
-            <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
-              <Heart size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-              <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Wishlist</span>
-            </a>
-
-            <a href="#" className="hidden lg:flex flex-col items-center group text-[#832729]">
+            </Link>
+            <Link to="/Login" className="hidden lg:flex flex-col items-center group text-[#832729]">
               <User size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
               <span className="text-[10px] uppercase font-semibold mt-1 tracking-wide opacity-0 group-hover:opacity-100 absolute translate-y-6 transition-opacity">Account</span>
-            </a>
-
+            </Link>
             <Link to="/cart" className="flex flex-col items-center group text-[#832729] relative">
               <div className="relative">
                 <ShoppingBag size={24} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
@@ -147,8 +160,8 @@ const Header = () => {
       {/* ── MOBILE MENU ── */}
       <div
         className={`lg:hidden fixed inset-0 z-50 transition-all duration-300 ${isMobileMenuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
+          ? 'opacity-100 pointer-events-auto'
+          : 'opacity-0 pointer-events-none'
           }`}
       >
         {/* Backdrop */}
@@ -176,30 +189,18 @@ const Header = () => {
 
             {/* Menu Items */}
             <nav className="space-y-6 text-lg">
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              <Link href="/" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Home <ChevronRight size={20} />
-              </a>
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
-                Shop <ChevronRight size={20} />
-              </a>
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
-                Necklaces <ChevronRight size={20} />
-              </a>
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
-                Rings <ChevronRight size={20} />
-              </a>
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
-                Bangles <ChevronRight size={20} />
-              </a>
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              </Link>
+              <Link to="/locate-us" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Stores <ChevronRight size={20} />
-              </a>
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
-                Wishlist <ChevronRight size={20} />
-              </a>
-              <a href="#" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              </Link>
+              <Link to="/cart" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+                Cart <ChevronRight size={20} />
+              </Link>
+              <Link to="/Login" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Account <ChevronRight size={20} />
-              </a>
+              </Link>
             </nav>
           </div>
         </div>
