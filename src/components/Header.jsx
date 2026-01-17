@@ -92,8 +92,8 @@ const Header = () => {
 
             <Link to="/" className="flex-shrink-0">
               <img className="h-16 md:h-20" src="/logo.png" alt="Brand Logo" />
-            </Link> 
-            
+            </Link>
+
           </div>
 
           {/* CENTER: Desktop Search */}
@@ -191,16 +191,16 @@ const Header = () => {
 
             {/* Menu Items */}
             <nav className="space-y-6 text-lg">
-              <Link href="/" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Home <ChevronRight size={20} />
               </Link>
-              <Link to="/locate-us" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              <Link to="/locate-us" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Stores (Location) <ChevronRight size={20} />
               </Link>
-              <Link to="/cart" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              <Link to="/cart" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Cart <ChevronRight size={20} />
               </Link>
-              <Link to="/Login" className="flex items-center text-[#832729] hover:text-[#6a1f21] transition justify-between">
+              <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center text-[#832729] hover:text-[#6a1f21] transition justify-between">
                 Account <ChevronRight size={20} />
               </Link>
             </nav>
