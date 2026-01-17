@@ -92,7 +92,8 @@ const Header = () => {
 
             <Link to="/" className="flex-shrink-0">
               <img className="h-16 md:h-20" src="/logo.png" alt="Brand Logo" />
-            </Link>
+            </Link> 
+            
           </div>
 
           {/* CENTER: Desktop Search */}
@@ -121,7 +122,6 @@ const Header = () => {
                   onClick={handleSearch}
                   className="bg-[#832729] hover:bg-[#6a1f21] text-white p-1.5 rounded-md transition"
                 >
-                  <Search size={18} />
                 </button>
               </div>
             </div>
@@ -133,6 +133,8 @@ const Header = () => {
               className="lg:hidden text-[#832729]"
               onClick={() => setIsMobileMenuOpen(true)} // Open menu to search or could add mobile search bar toggle
             >
+              <Link to="/Login" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              </Link>
               <Search size={22} />
             </button>
 
@@ -189,33 +191,18 @@ const Header = () => {
 
             {/* Menu Items */}
             <nav className="space-y-6 text-lg">
-              <Link to="/" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              <Link href="/" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Home <ChevronRight size={20} />
               </Link>
               <Link to="/locate-us" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
-                Stores <ChevronRight size={20} />
+                Stores (Location) <ChevronRight size={20} />
               </Link>
               <Link to="/cart" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Cart <ChevronRight size={20} />
               </Link>
-
-              {/* Search Input for Mobile */}
-              <div className="mb-6 relative">
-                <input
-                  type="text"
-                  className="w-full h-11 pl-4 pr-12 bg-[#F8F8F8] border border-[#e8e8e8] rounded-md focus:outline-none focus:border-[#832729] transition-colors"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-                <button
-                  onClick={handleSearch}
-                  className="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-[#832729]"
-                >
-                  <Search size={20} />
-                </button>
-              </div>
+              <Link to="/Login" className="flex items-center text-[#832729] hover:text-[#6a1f21] transition justify-between">
+                Account <ChevronRight size={20} />
+              </Link>
             </nav>
           </div>
         </div>

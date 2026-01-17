@@ -31,17 +31,17 @@ const Footer = () => {
                     <div>
                         <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-[#D4AF37]">Shop</h4>
                         <ul className="space-y-4 text-sm text-gray-400">
-                            <li><a href="/collections" className="hover:text-white transition">All Jewellery</a></li>
-                            <li><a href="/collections" className="hover:text-white transition">New Arrivals</a></li>
-                            <li><a href="/collections" className="hover:text-white transition">Best Sellers</a></li>
-                            <li><a href="/collections" className="hover:text-white transition">Bridal Collection</a></li>
+                            <li><a href="/collection" className="hover:text-white transition">All Jewellery</a></li>
+                            <li><a href="/collection" className="hover:text-white transition">New Arrivals</a></li>
+                            <li><a href="/collection" className="hover:text-white transition">Best Sellers</a></li>
+                            <li><a href="/collection" className="hover:text-white transition">Bridal Collection</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-[#D4AF37]">Support</h4>
                         <ul className="space-y-4 text-sm text-gray-400">
-                            <li><a href="/stores" className="hover:text-white transition">Contact Us</a></li>
+                            <li><a href="/locate-us" className="hover:text-white transition">Contact Us</a></li>
                         </ul>
                     </div>
 
