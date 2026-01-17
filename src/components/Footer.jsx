@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { testimonials } from '../data/testimonials';
 import TestimonialSection from './TestimonialSection';
 import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from 'lucide-react';
@@ -31,17 +32,17 @@ const Footer = () => {
                     <div>
                         <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-[#D4AF37]">Shop</h4>
                         <ul className="space-y-4 text-sm text-gray-400">
-                            <li><a href="/collection" className="hover:text-white transition">All Jewellery</a></li>
-                            <li><a href="/collection" className="hover:text-white transition">New Arrivals</a></li>
-                            <li><a href="/collection" className="hover:text-white transition">Best Sellers</a></li>
-                            <li><a href="/collection" className="hover:text-white transition">Bridal Collection</a></li>
+                            <li><Link to="/collection" className="hover:text-white transition">All Jewellery</Link></li>
+                            <li><Link to="/collection" className="hover:text-white transition">New Arrivals</Link></li>
+                            <li><Link to="/collection" className="hover:text-white transition">Best Sellers</Link></li>
+                            <li><Link to="/collection" className="hover:text-white transition">Bridal Collection</Link></li>
                         </ul>
                     </div>
 
                     <div>
                         <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-[#D4AF37]">Support</h4>
                         <ul className="space-y-4 text-sm text-gray-400">
-                            <li><a href="/locate-us" className="hover:text-white transition">Contact Us</a></li>
+                            <li><Link to="/locate-us" className="hover:text-white transition">Contact Us</Link></li>
                         </ul>
                     </div>
 
