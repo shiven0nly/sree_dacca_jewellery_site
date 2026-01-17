@@ -189,7 +189,7 @@ const Header = () => {
 
             {/* Menu Items */}
             <nav className="space-y-6 text-lg">
-              <Link href="/" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
+              <Link to="/" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Home <ChevronRight size={20} />
               </Link>
               <Link to="/locate-us" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
@@ -198,9 +198,24 @@ const Header = () => {
               <Link to="/cart" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
                 Cart <ChevronRight size={20} />
               </Link>
-              <Link to="/Login" className="flex items-center justify-between text-[#832729] hover:text-[#6a1f21] transition">
-                Account <ChevronRight size={20} />
-              </Link>
+
+              {/* Search Input for Mobile */}
+              <div className="mb-6 relative">
+                <input
+                  type="text"
+                  className="w-full h-11 pl-4 pr-12 bg-[#F8F8F8] border border-[#e8e8e8] rounded-md focus:outline-none focus:border-[#832729] transition-colors"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                />
+                <button
+                  onClick={handleSearch}
+                  className="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-[#832729]"
+                >
+                  <Search size={20} />
+                </button>
+              </div>
             </nav>
           </div>
         </div>
